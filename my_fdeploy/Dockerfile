@@ -1,35 +1,10 @@
-# FROM node:20
-# WORKDIR /app
-# COPY package*.json ./
-# RUN npm ci
-# COPY . .
-# RUN npm run build
-# RUN npm install -g serve
-# EXPOSE 5000
-# CMD ["serve", "-s", "build", "-l", "5000"]
-# Step 1: Use an official Node.js runtime as a base image
-FROM node:16-alpine
-
-# Step 2: Set the working directory inside the container
+FROM node:20
 WORKDIR /app
-
-# Step 3: Copy package.json and package-lock.json (or yarn.lock) to install dependencies
 COPY package*.json ./
-
-# Step 4: Install dependencies
-RUN npm install
-
-# Step 5: Copy the rest of the application code into the container
+RUN npm ci
 COPY . .
-
-# Step 6: Build the React application for production
 RUN npm run build
-
-# Step 7: Install a lightweight HTTP server (serve) to serve the build folder
 RUN npm install -g serve
-
-# Step 8: Expose port 5000 for the app to be accessible
 EXPOSE 5000
-
-# Step 9: Command to serve the production build
 CMD ["serve", "-s", "build", "-l", "5000"]
+
